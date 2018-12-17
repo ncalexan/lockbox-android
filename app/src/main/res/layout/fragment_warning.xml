@@ -13,7 +13,7 @@
         android:background="@color/gray_73_percent"
         android:paddingStart="16dp"
         android:paddingEnd="16dp"
-        android:visibility="gone"
+        android:visibility="visible"
         xmlns:tools="http://schemas.android.com/tools">
 
     <ImageView

@@ -16,17 +16,18 @@
         tools:context=".view.AppWebPageFragment">
 
     <include layout="@layout/include_backable"/>
+    <include layout="@layout/fragment_warning"/>
 
 
-    <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="?attr/actionBarSize"
-            android:id="@+id/warningMessage"
-            android:layout="@layout/fragment_warning"
-            android:orientation="horizontal"
-            app:layout_constraintTop_toBottomOf="@id/toolbar"
-            app:layout_constraintBottom_toTopOf="@id/webView" />
+    <!--<LinearLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:layout_marginTop="?attr/actionBarSize"-->
+            <!--android:id="@+id/warningMessage"-->
+            <!--android:layout="@layout/fragment_warning"-->
+            <!--android:orientation="horizontal"-->
+            <!--app:layout_constraintTop_toBottomOf="@id/warningMessage"-->
+            <!--app:layout_constraintBottom_toTopOf="@id/webView" />-->
 
     <WebView
             android:id="@+id/webView"
@@ -35,7 +36,7 @@
             android:overScrollMode="ifContentScrolls"
             android:layout_marginTop="?attr/actionBarSize"
             android:layout_weight="1"
-            app:layout_constraintTop_toBottomOf="@id/toolbar"
+            app:layout_constraintTop_toBottomOf="@id/warningMessage"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"/>
 </android.support.constraint.ConstraintLayout>
