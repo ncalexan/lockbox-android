@@ -13,7 +13,6 @@ import android.support.v4.widget.DrawerLayout
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.Toolbar
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,6 +22,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.jakewharton.rxbinding2.support.design.widget.itemSelections
 import android.widget.Button
 import android.widget.ListPopupWindow
+import android.widget.Toolbar
 import com.jakewharton.rxbinding2.support.v7.widget.navigationClicks
 import com.jakewharton.rxbinding2.view.clicks
 import com.squareup.picasso.Picasso
