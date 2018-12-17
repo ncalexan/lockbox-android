@@ -33,6 +33,23 @@
     <string name="toast_password_copied">Password copied</string>
     <string name="learn_to_edit_entry">Learn how to edit this entry</string>
 
+    <!--Accessibility: content descriptions-->
+    <string name="copy_username_content_description">Copy your username</string>
+    <string name="copy_password_content_description">Copy your password</string>
+    <string name="display_password_content_description">Display your password in plain text</string>
+    <string name="backable_description">Back</string>
+    <string name="menu_description">Menu</string>
+    <string name="search_description">Search entries</string>
+    <string name="sort_description">Sort entries</string>
+    <string name="search_clear_content_description">Clear search bar text</string>
+    <string name="profile_image_content_description">Firefox Account Profile Image</string>
+    <string name="auto_lock_description">Auto lock setting</string>
+    <string name="app_version_description">Application version number</string>
+    <string name="autofill_description">Application autofill setting</string>
+    <string name="fingerprint_description">Enable fingerprint setting</string>
+    <string name="learn_more_description">Learn more about sending usage data</string>
+    <string name="lock_icon_description">Lock icon image</string>
+
     <string name="configuration_title">Configuration</string>
     <string name="support_title">Support</string>
     <string name="learn_more">Learn more</string>
@@ -81,22 +98,6 @@
     <string name="default_avatar_url">https://firefoxusercontent.com/00000000000000000000000000000000</string>
     <string name="syncing_entries">Syncing your entries…</string>
 
-    <!--Accessibility: content descriptions-->
-    <string name="copy_username_content_description">Copy your username</string>
-    <string name="copy_password_content_description">Copy your password</string>
-    <string name="display_password_content_description">Display your password in plain text</string>
-    <string name="backable_description">Back</string>
-    <string name="menu_description">Menu</string>
-    <string name="search_description">Search entries</string>
-    <string name="sort_description">Sort entries</string>
-    <string name="search_clear_content_description">Clear search bar text</string>
-    <string name="profile_image_content_description">Firefox Account Profile Image</string>
-    <string name="auto_lock_description">Auto lock setting</string>
-    <string name="app_version_description">Application version number</string>
-    <!-- <string name="autofill_description">Application autofill setting</string> -->
-    <string name="fingerprint_description">Enable fingerprint setting</string>
-    <string name="lock_icon_description">Lock icon image</string>
-    <string name="learn_more_description">Learn more about sending usage data</string>
     <string name="retry">Retry</string>
     <string name="retryButton">Retry connect to internet</string>
     <string name="networkWarningMessage">Warning: device not connected to the internet.</string>

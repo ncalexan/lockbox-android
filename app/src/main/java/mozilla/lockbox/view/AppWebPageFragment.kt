@@ -7,7 +7,10 @@
 package mozilla.lockbox.view
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.graphics.Bitmap
+import android.net.ConnectivityManager
+import android.net.NetworkInfo
 import android.os.Bundle
 import android.support.annotation.StringRes
 import android.view.LayoutInflater
@@ -20,6 +23,7 @@ import io.reactivex.functions.Consumer
 import kotlinx.android.synthetic.main.fragment_fxa_login.view.*
 import kotlinx.android.synthetic.main.fragment_webview.*
 import kotlinx.android.synthetic.main.include_backable.view.*
+import mozilla.lockbox.log
 import mozilla.lockbox.presenter.WebPageView
 import mozilla.lockbox.presenter.AppWebPagePresenter
 
@@ -27,6 +31,7 @@ class AppWebPageFragment : BackableFragment(), WebPageView {
     override var webViewObserver: Consumer<String>? = null
 
     private var url: String? = null
+    private var isConnected: Boolean = false
 
     @StringRes
     private var toolbarTitle: Int? = null
@@ -50,6 +55,13 @@ class AppWebPageFragment : BackableFragment(), WebPageView {
 
         view.toolbar.title = getString(toolbarTitle!!)
 
+        checkConnectivity()
+        if(isConnected == false){
+            // log error
+            log.error(getString(R.string.networkWarningMessage))
+            // set visibility of warning message to true
+        }
+
         return view
     }
 
@@ -61,5 +73,11 @@ class AppWebPageFragment : BackableFragment(), WebPageView {
             }
         }
         webView.loadUrl(url)
+    }
+
+    private fun checkConnectivity(){
+        val connectivityManager = context!!.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val activeNetwork: NetworkInfo? = connectivityManager.activeNetworkInfo
+        isConnected = activeNetwork?.isConnectedOrConnecting == true
     }
 }
