@@ -42,7 +42,7 @@
             android:textStyle="normal"
             android:textColor="@color/text_white"
             android:lineSpacingExtra="6.5sp"
-            tools:text="No Internet Connection"
+            tools:text="@string/no_internet_connection"
             app:layout_constraintStart_toEndOf="@id/warningIcon"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
