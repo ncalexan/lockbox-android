@@ -11,6 +11,7 @@ import mozilla.lockbox.extensions.filterByType
 import mozilla.lockbox.flux.Dispatcher
 import io.reactivex.disposables.CompositeDisposable
 import mozilla.lockbox.R
+import mozilla.lockbox.log
 
 open class NetworkStore(
     val dispatcher: Dispatcher = Dispatcher.shared
@@ -43,7 +44,10 @@ open class NetworkStore(
             .filter { isConnectedToNetwork }
             .subscribe {
                 when (it) {
-                    is NetworkAction.CheckConnectivity -> checkConnectivity()
+                    is NetworkAction.CheckConnectivity -> {
+                        checkConnectivity()
+                        log.info("ELISE NETWORK STORE: get network action")
+                    }
                 }
             }
             .addTo(compositeDisposable)
@@ -55,9 +59,13 @@ open class NetworkStore(
     }
 
     private fun checkConnectivity() {
-        if(isConnectedToNetwork)
+        if (isConnectedToNetwork){
+            log.info("ELISE NETWORK STORE: CONNECTED TO NETWORK")
             _state.onNext(State.Connected)
+        }
         else {
+            log.info("ELISE NETWORK STORE ERROR: NOT CONNECTED TO NETWORK")
+
             // error
             _state.onNext(State.ConnectionError(NETWORK_WARNING_MESSAGE))
         }

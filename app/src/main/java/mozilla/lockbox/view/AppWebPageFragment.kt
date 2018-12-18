@@ -21,26 +21,28 @@ import mozilla.lockbox.R
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import io.reactivex.functions.Consumer
+import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.fragment_fxa_login.view.*
 import kotlinx.android.synthetic.main.fragment_warning.view.*
 import kotlinx.android.synthetic.main.fragment_webview.*
 import kotlinx.android.synthetic.main.include_backable.view.*
+import mozilla.lockbox.action.NetworkAction
 import mozilla.lockbox.log
 import mozilla.lockbox.presenter.WebPageView
 import mozilla.lockbox.presenter.AppWebPagePresenter
+import mozilla.lockbox.store.NetworkStore
 
 class AppWebPageFragment : BackableFragment(), WebPageView {
 
-    override var networkObserver: Consumer<Boolean>
-        get() = {
+//    override var networkObserver: Consumer<Boolean>
+//        get() = _isConnected
 
-        }
 
     override var webViewObserver: Consumer<String>? = null
 
     private var url: String? = null
+    private val _isConnected = PublishSubject.create<Boolean>()
 
-    private var isConnected: Boolean = false
     @StringRes
     private var toolbarTitle: Int? = null
 
@@ -75,15 +77,30 @@ class AppWebPageFragment : BackableFragment(), WebPageView {
         webView.loadUrl(url)
     }
 
-    override fun onSucceeded() {
-        log.info(getString(R.string.network_connection_success))
+    override fun onSuccess() {
+        val state = NetworkStore.shared.isConnectedToNetwork
+        // DEBUGGING - not hitting here
+        log.info("ELISE FRAGMENT - state = $state")
+
         view!!.networkWarning.visibility = View.GONE
+        view!!.warningMessage.visibility = View.GONE
+
+        // DEBUGGING
+        view!!.warningMessage.setBackgroundColor(resources.getColor(R.color.green))
+        view!!.warningMessage.warningMessage.text = "SUCCESS"
+        // DEBUGGING
 
     }
 
     override fun onError(error: String?) {
         log.error(error)
         view!!.networkWarning.warningMessage.text = getString(R.string.no_internet_connection)
+
+        // DEBUGGING
+        view!!.warningMessage.setBackgroundColor(resources.getColor(R.color.red))
+        view!!.warningMessage.warningMessage.text = "FAILURE"
+        // DEBUGGING
+
         view!!.networkWarning.visibility = View.VISIBLE
     }
 
