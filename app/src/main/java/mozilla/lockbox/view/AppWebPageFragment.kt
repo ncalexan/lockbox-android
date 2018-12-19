@@ -7,41 +7,33 @@
 package mozilla.lockbox.view
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.graphics.Bitmap
-import android.net.ConnectivityManager
-import android.net.NetworkInfo
 import android.os.Bundle
 import android.support.annotation.StringRes
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.VISIBLE
 import android.view.ViewGroup
 import mozilla.lockbox.R
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import io.reactivex.functions.Consumer
-import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.fragment_fxa_login.view.*
 import kotlinx.android.synthetic.main.fragment_warning.view.*
 import kotlinx.android.synthetic.main.fragment_webview.*
 import kotlinx.android.synthetic.main.include_backable.view.*
-import mozilla.lockbox.action.NetworkAction
 import mozilla.lockbox.log
 import mozilla.lockbox.presenter.WebPageView
 import mozilla.lockbox.presenter.AppWebPagePresenter
 import mozilla.lockbox.store.NetworkStore
 
 class AppWebPageFragment : BackableFragment(), WebPageView {
-
-//    override var networkObserver: Consumer<Boolean>
-//        get() = _isConnected
-
+    override val networkErrorVisibility: Consumer<in NetworkStore.State>
+        get() = Consumer { networkErrorVisibility(it) }
 
     override var webViewObserver: Consumer<String>? = null
 
     private var url: String? = null
-    private val _isConnected = PublishSubject.create<Boolean>()
+    private val _isConnected: Boolean? = null
 
     @StringRes
     private var toolbarTitle: Int? = null
@@ -77,31 +69,44 @@ class AppWebPageFragment : BackableFragment(), WebPageView {
         webView.loadUrl(url)
     }
 
-    override fun onSuccess() {
-        val state = NetworkStore.shared.isConnectedToNetwork
-        // DEBUGGING - not hitting here
-        log.info("ELISE FRAGMENT - state = $state")
 
-        view!!.networkWarning.visibility = View.GONE
-        view!!.warningMessage.visibility = View.GONE
+    private fun networkErrorVisibility(showError: NetworkStore.State) {
+//        view!!.networkWarning.visibility = View.GONE
+//        view!!.warningMessage.visibility = View.GONE
 
-        // DEBUGGING
-        view!!.warningMessage.setBackgroundColor(resources.getColor(R.color.green))
-        view!!.warningMessage.warningMessage.text = "SUCCESS"
-        // DEBUGGING
+        log.info("ELISE - FRAGMENT -----networkErrorVisibility----")
+
+        if(showError is NetworkStore.State.Connected){
+            log.info("ELISE - FRAGMENT - no error: $showError")
+            // DEBUGGING
+            view!!.warningMessage.setBackgroundColor(resources.getColor(R.color.green))
+            view!!.networkWarning.warningMessage.text = "SUCCESS"
+            view!!.warningMessage.text = "SUCCESS"
+            // DEBUGGING
+        } else {
+            log.info("ELISE - FRAGMENT - error: $showError")
+
+            view!!.warningMessage.setBackgroundColor(resources.getColor(R.color.red))
+            view!!.warningMessage.warningMessage.text = "FAILURE"
+        }
+
 
     }
 
-    override fun onError(error: String?) {
-        log.error(error)
-        view!!.networkWarning.warningMessage.text = getString(R.string.no_internet_connection)
-
-        // DEBUGGING
-        view!!.warningMessage.setBackgroundColor(resources.getColor(R.color.red))
-        view!!.warningMessage.warningMessage.text = "FAILURE"
-        // DEBUGGING
-
-        view!!.networkWarning.visibility = View.VISIBLE
-    }
+//    private fun onNetworkConnectionError(error: String?) {
+//        log.error("ELISE FRAGMENT - error: $error")
+//
+//        val state = NetworkStore.shared.isConnectedToNetwork
+//        // DEBUGGING - not hitting here
+//        log.info("ELISE FRAGMENT - state = $state")
+//        view!!.networkWarning.warningMessage.text = getString(R.string.no_internet_connection)
+//
+//        // DEBUGGING
+//        view!!.warningMessage.setBackgroundColor(resources.getColor(R.color.red))
+//        view!!.warningMessage.warningMessage.text = "FAILURE"
+//        // DEBUGGING
+//
+//        view!!.networkWarning.visibility = View.VISIBLE
+//    }
 
 }
