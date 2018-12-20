@@ -19,6 +19,7 @@ import mozilla.components.service.sync.logins.AsyncLoginsStorage
 import mozilla.lockbox.action.DataStoreAction
 import mozilla.lockbox.extensions.filterByType
 import mozilla.lockbox.flux.Dispatcher
+import mozilla.lockbox.log
 import mozilla.lockbox.model.SyncCredentials
 import mozilla.lockbox.support.DataStoreSupport
 import mozilla.lockbox.support.FixedDataStoreSupport
@@ -103,7 +104,10 @@ open class DataStore(
         if (backend.isLocked()) {
             backend.unlock(support.encryptionKey)
                 .asSingle(Dispatchers.Default)
-                .subscribe { _, _ ->
+                .subscribe { _, error ->
+                    error?.let {
+                        log.error(it.localizedMessage)
+                    }
                     stateSubject.onNext(State.Unlocked)
                 }
                 .addTo(compositeDisposable)
@@ -165,7 +169,10 @@ open class DataStore(
         clearList()
         backend.reset()
             .asSingle(Dispatchers.Default)
-            .subscribe { _, _ ->
+            .subscribe { _, error ->
+                error?.let {
+                    log.error(it.localizedMessage)
+                }
                 this.stateSubject.onNext(State.Unprepared)
             }
             .addTo(compositeDisposable)
